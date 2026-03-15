@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>AI IVR Demo - Shaik Zunera</title>
+
+<style>
+
+:root{
+  --bg-main:#0c1326;
+  --bg-secondary:#0e1838;
+  --panel-bg:rgba(255,255,255,0.04);
+  --primary:#63f5c6;
+  --secondary:#7b70ff;
+  --text-light:#eafaf1;
+  --muted:rgba(255,255,255,0.6);
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:system-ui,Segoe UI,Roboto;
+}
+
+body{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  background:
+  radial-gradient(circle at 15% 20%, rgba(123,112,255,0.1), transparent 20%),
+  radial-gradient(circle at 90% 80%, rgba(99,245,198,0.1), transparent 25%),
+  linear-gradient(180deg,var(--bg-main),var(--bg-secondary));
+
+  color:var(--text-light);
+  padding:25px;
+}
+
+.wrapper{
+  width:950px;
+  max-width:95vw;
+  display:grid;
+  grid-template-columns:420px 1fr;
+  gap:22px;
+}
+
+.panel{
+  background:var(--panel-bg);
+  border-radius:16px;
+  padding:18px;
+  border:1px solid rgba(255,255,255,0.08);
+}
+
+.header{
+  display:flex;
+  justify-content:space-between;
+  margin-bottom:10px;
+}
+
+.brand{
+  font-weight:700;
+  color:var(--secondary);
+}
+
+.display{
+  background:rgba(255,255,255,0.03);
+  border-radius:12px;
+  padding:14px;
+  min-height:300px;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+.callbar{
+  display:flex;
+  justify-content:space-between;
+}
+
+.timer{
+  color:var(--primary);
+  font-weight:700;
+}
+
+.ivr-box{
+  flex:1;
+  overflow:auto;
+}
+
+.message{
+  background:rgba(255,255,255,0.03);
+  padding:10px;
+  border-radius:8px;
+  margin-bottom:6px;
+}
+
+.tag{
+  font-size:12px;
+  color:var(--muted);
+}
+
+.keypad{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:8px;
+  margin-top:10px;
+}
+
+.key{
+  background:rgba(255,255,255,0.03);
+  border-radius:10px;
+  padding:15px;
+  text-align:center;
+  font-weight:700;
+  cursor:pointer;
+}
+
+.key:hover{
+  transform:translateY(-2px);
+}
+
+.controls{
+  display:flex;
+  gap:10px;
+  margin-top:12px;
+}
+
+button{
+  flex:1;
+  padding:12px;
+  border-radius:10px;
+  border:none;
+  font-weight:700;
+  cursor:pointer;
+}
+
+.start{
+  background:linear-gradient(90deg,var(--primary),var(--secondary));
+}
+
+.end{
+  background:transparent;
+  border:1px solid rgba(255,255,255,0.2);
+  color:white;
+}
+
+.right{
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+}
+
+.card{
+  background:var(--panel-bg);
+  padding:14px;
+  border-radius:12px;
+}
+
+.log{
+  max-height:260px;
+  overflow:auto;
+}
+
+.log-item{
+  background:rgba(255,255,255,0.03);
+  padding:8px;
+  margin-bottom:6px;
+  border-radius:6px;
+  font-size:13px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="wrapper">
+
+<!-- PHONE PANEL -->
+
+<div class="panel">
+
+<div class="header">
+<div class="brand">IVR Demo — Shaik Zunera</div>
+<div id="status">Backend: Checking...</div>
+</div>
+
+<div class="display">
+
+<div class="callbar">
+<div>+91 1800 123 456</div>
+<div class="timer" id="timer">00:00</div>
+</div>
+
+<div class="ivr-box" id="ivr">
+
+<div class="message">
+<div class="tag">System</div>
+Press Start Call to begin IVR simulation
+</div>
+
+</div>
+
+<div class="keypad" id="pad">
+
+<div class="key" data-k="1">1</div>
+<div class="key" data-k="2">2</div>
+<div class="key" data-k="3">3</div>
+<div class="key" data-k="4">4</div>
+<div class="key" data-k="5">5</div>
+<div class="key" data-k="6">6</div>
+<div class="key" data-k="7">7</div>
+<div class="key" data-k="8">8</div>
+<div class="key" data-k="9">9</div>
+<div class="key" data-k="*">*</div>
+<div class="key" data-k="0">0</div>
+<div class="key" data-k="#">#</div>
+
+</div>
+
+<div class="controls">
+<button class="start" id="startBtn">Start Call</button>
+<button class="end" id="endBtn">Hang Up</button>
+</div>
+
+</div>
+</div>
+
+<!-- RIGHT PANEL -->
+
+<div class="right">
+
+<div class="card">
+<b>Session Info</b>
+<div id="active">Active Calls: 0</div>
+<div id="total">Total Calls: 0</div>
+</div>
+
+<div class="card">
+<b>Call Logs</b>
+
+<div class="log" id="logs">
+<div class="log-item">No calls yet</div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+const API="http://127.0.0.1:8000"
+
+let callSession=null
+let timerInt
+let startTime
+
+const ivr=document.getElementById("ivr")
+const logs=document.getElementById("logs")
+const timer=document.getElementById("timer")
+
+function addMsg(text,tag="System"){
+let div=document.createElement("div")
+div.className="message"
+div.innerHTML="<div class='tag'>"+tag+"</div>"+text
+ivr.appendChild(div)
+ivr.scrollTop=ivr.scrollHeight
+}
+
+function log(text){
+let item=document.createElement("div")
+item.className="log-item"
+item.innerText=new Date().toLocaleTimeString()+" - "+text
+logs.prepend(item)
+}
+
+function startTimer(){
+startTime=Date.now()
+
+timerInt=setInterval(()=>{
+let s=Math.floor((Date.now()-startTime)/1000)
+timer.innerText=
+String(Math.floor(s/60)).padStart(2,"0")+":"+
+String(s%60).padStart(2,"0")
+},1000)
+}
+
+function stopTimer(){
+clearInterval(timerInt)
+timer.innerText="00:00"
+}
+
+document.getElementById("startBtn").onclick=async()=>{
+
+addMsg("Connecting...")
+
+let r=await fetch(API+"/ivr/start",{
+method:"POST",
+headers:{'Content-Type':'application/json'},
+body:JSON.stringify({caller_number:"+911111111111"})
+})
+
+let data=await r.json()
+
+callSession=data.call_id
+
+addMsg(data.prompt,"IVR")
+
+log("Call started ID:"+callSession)
+
+startTimer()
+
+}
+
+document.getElementById("endBtn").onclick=async()=>{
+
+if(!callSession)return
+
+await fetch(API+"/ivr/end?call_id="+callSession,{method:"POST"})
+
+log("Call ended "+callSession)
+
+callSession=null
+
+stopTimer()
+
+addMsg("Call ended","IVR")
+
+}
+
+document.querySelectorAll(".key").forEach(k=>{
+
+k.onclick=async()=>{
+
+let digit=k.dataset.k
+
+addMsg("Pressed "+digit,"User")
+
+if(!callSession)return
+
+let r=await fetch(API+"/ivr/dtmf",{
+
+method:"POST",
+headers:{'Content-Type':'application/json'},
+body:JSON.stringify({
+
+call_id:callSession,
+digit:digit,
+current_menu:"main"
+
+})
+
+})
+
+let data=await r.json()
+
+if(data.prompt) addMsg(data.prompt,"IVR")
+
+}
+
+})
+
+</script>
+
+</body>
+</html>
