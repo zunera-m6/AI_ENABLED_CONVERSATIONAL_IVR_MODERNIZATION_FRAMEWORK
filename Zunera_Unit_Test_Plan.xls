@@ -1,7 +1,0 @@
-Test Case ID,Module Name,Test Description,Expected Result,Actual Result,Status
-TC001,Integration Layer,Verify API connector authenticates successfully with ACS platform,Returns 200 OK and valid OAuth token,Token received and validated successfully,Pass
-TC002,Integration Layer,Check JSON payload mapping from legacy VXML to BAP service format,Data mapped correctly without missing fields,All attributes parsed and mapped flawlessly,Pass
-TC003,Conversational Interface,Validate natural language intent recognition for main menu options,Intent correctly identified with >90% confidence,Intent matched with 95% accuracy,Pass
-TC004,Conversational Interface,Ensure system correctly routes unrecognized speech to legacy IVR fallback,Call seamlessly transferred to VXML fallback node,Fallback triggered after 3 failed attempts,Pass
-TC005,Conversational Interface,Test real-time voice input handling and silence detection timeout,System waits 3 seconds before prompting user,Timeout worked perfectly at exactly 3s,Pass
-TC006,Integration Layer,Verify middleware handles concurrent data requests without crashing,Handles 50 simultaneous requests smoothly,Handled 50 requests with avg 120ms latency,Pass
