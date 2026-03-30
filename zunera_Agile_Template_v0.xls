@@ -1,8 +1,0 @@
-SL #,Sprint #,Sprint start date,Sprint end date,Team member name ,Start Doing,Stop Doing ,Continue Doing ,Action taken
-1,1,2/2/2026,2/16/2026,Backend Team,Documenting legacy VXML node structures directly from code.,Relying purely on outdated IRCTC architecture diagrams.,Thoroughly identifying compatibility gaps before coding.,Created a shared repository for mapped VXML call flows.
-2,2,2/17/2026,3/2/2026,Backend Team,Writing unit tests for API connectors linking VXML to ACS/BAP.,Delaying real-time PNR data format validation during testing.,Regular cross-team syncing for middleware integration,Implemented automated API payload testing for the middleware.
-3,3,3/3/2026,3/16/2026,AI Team,Maintaining clear mapping of user intents to existing IVR logic,Using overly complex dialogue flows for simple train inquiries.,Tuning NLP models for accurate voice input handling,Standardized prompt guidelines for all conversational flows
-4,4,3/17/2026,3/30/2026,Frontend + Backend Team,Parallel documentation of performance issues during load testing.,Waiting until the end of the sprint to conduct full-cycle testing.,Monitoring post-deployment system behaviour closely.,Scheduled bi-weekly production readiness checks before final rollout.
-5,,,,,,,,
-6,,,,,,,,
-7,,,,,,,,
