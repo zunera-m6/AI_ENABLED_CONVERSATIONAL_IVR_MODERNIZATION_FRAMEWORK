@@ -1,475 +1,874 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>AI IVR Demo - Shaik Zunera</title>
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>AI Conversational IVR</title>
+
 
 <style>
 
-:root{
-  --bg-main:#0c1326;
-  --bg-secondary:#0e1838;
-  --panel-bg:rgba(255,255,255,0.04);
-  --primary:#63f5c6;
-  --secondary:#7b70ff;
-  --text-light:#eafaf1;
-  --muted:rgba(255,255,255,0.6);
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:"Segoe UI",sans-serif;
 }
 
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family:system-ui,Segoe UI,Roboto;
-}
 
 body{
-  min-height:100vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
 
-  background:
-  radial-gradient(circle at 15% 20%, rgba(123,112,255,0.1), transparent 20%),
-  radial-gradient(circle at 90% 80%, rgba(99,245,198,0.1), transparent 25%),
-  linear-gradient(180deg,var(--bg-main),var(--bg-secondary));
+    min-height:100vh;
 
-  color:var(--text-light);
-  padding:25px;
+    background:
+    radial-gradient(circle at top,#263b7a,#080d20 45%);
+
+    color:white;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
 }
 
-.wrapper{
-  width:950px;
-  max-width:95vw;
-  display:grid;
-  grid-template-columns:420px 1fr;
-  gap:22px;
+
+.container{
+
+    width:1100px;
+    max-width:95%;
+
+    display:grid;
+
+    grid-template-columns:420px 1fr;
+
+    gap:25px;
+
 }
 
-.panel{
-  background:var(--panel-bg);
-  border-radius:16px;
-  padding:18px;
-  border:1px solid rgba(255,255,255,0.08);
-}
 
-.header{
-  display:flex;
-  justify-content:space-between;
-  margin-bottom:10px;
-}
-
-.brand{
-  font-weight:700;
-  color:var(--secondary);
-}
-
-.display{
-  background:rgba(255,255,255,0.03);
-  border-radius:12px;
-  padding:14px;
-  min-height:300px;
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-}
-
-.callbar{
-  display:flex;
-  justify-content:space-between;
-}
-
-.timer{
-  color:var(--primary);
-  font-weight:700;
-}
-
-.ivr-box{
-  flex:1;
-  overflow:auto;
-}
-
-.message{
-  background:rgba(255,255,255,0.03);
-  padding:10px;
-  border-radius:8px;
-  margin-bottom:6px;
-}
-
-.tag{
-  font-size:12px;
-  color:var(--muted);
-}
-
-.keypad{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:8px;
-  margin-top:10px;
-}
-
-.key{
-  background:rgba(255,255,255,0.03);
-  border-radius:10px;
-  padding:15px;
-  text-align:center;
-  font-weight:700;
-  cursor:pointer;
-}
-
-.key:hover{
-  transform:translateY(-2px);
-}
-
-.controls{
-  display:flex;
-  gap:10px;
-  margin-top:12px;
-}
-
-button{
-  flex:1;
-  padding:12px;
-  border-radius:10px;
-  border:none;
-  font-weight:700;
-  cursor:pointer;
-}
-
-.start{
-  background:linear-gradient(90deg,var(--primary),var(--secondary));
-}
-
-.end{
-  background:transparent;
-  border:1px solid rgba(255,255,255,0.2);
-  color:white;
-}
-
-.right{
-  display:flex;
-  flex-direction:column;
-  gap:14px;
-}
+/* LEFT PANEL */
 
 .card{
-  background:var(--panel-bg);
-  padding:14px;
-  border-radius:12px;
+
+    background:rgba(255,255,255,.08);
+
+    backdrop-filter:blur(20px);
+
+    border:1px solid rgba(255,255,255,.15);
+
+    border-radius:25px;
+
+    padding:25px;
+
+    box-shadow:0 20px 50px rgba(0,0,0,.4);
+
 }
 
-.log{
-  max-height:260px;
-  overflow:auto;
+
+
+.header{
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
 }
 
-.log-item{
-  background:rgba(255,255,255,0.03);
-  padding:8px;
-  margin-bottom:6px;
-  border-radius:6px;
-  font-size:13px;
+
+.logo{
+
+    font-size:22px;
+
+    font-weight:800;
+
+    color:#63f5c6;
+
 }
+
+
+.status{
+
+    padding:7px 15px;
+
+    border-radius:20px;
+
+    background:#1bc47d;
+
+    font-size:12px;
+
+}
+
+
+
+.ai-circle{
+
+    width:120px;
+    height:120px;
+
+    margin:30px auto;
+
+    border-radius:50%;
+
+    background:
+    linear-gradient(135deg,#63f5c6,#7b70ff);
+
+    display:flex;
+
+    justify-content:center;
+    align-items:center;
+
+    font-size:45px;
+
+
+    animation:pulse 2s infinite;
+
+}
+
+
+@keyframes pulse{
+
+50%{
+    transform:scale(1.08);
+
+    box-shadow:0 0 50px #63f5c6;
+}
+
+}
+
+
+
+.timer{
+
+    text-align:center;
+
+    font-size:30px;
+
+    color:#63f5c6;
+
+}
+
+
+
+.call-actions{
+
+    display:flex;
+
+    gap:10px;
+
+    margin-top:25px;
+
+}
+
+
+button{
+
+    flex:1;
+
+    padding:14px;
+
+    border:none;
+
+    border-radius:15px;
+
+    cursor:pointer;
+
+    font-weight:bold;
+
+    font-size:15px;
+
+}
+
+
+
+.start{
+
+background:
+linear-gradient(90deg,#63f5c6,#7b70ff);
+
+color:#111;
+
+}
+
+
+.end{
+
+background:#ff4b5c;
+
+color:white;
+
+}
+
+
+.voice{
+
+background:#ffffff20;
+
+color:white;
+
+border:1px solid white;
+
+}
+
+
+
+
+
+/* CHAT */
+
+
+.chat{
+
+height:520px;
+
+overflow:auto;
+
+padding:15px;
+
+}
+
+
+
+.message{
+
+max-width:75%;
+
+padding:15px;
+
+border-radius:20px;
+
+margin:12px 0;
+
+animation:show .3s;
+
+}
+
+
+
+@keyframes show{
+
+from{
+
+opacity:0;
+transform:translateY(20px);
+
+}
+
+}
+
+
+
+.ivr{
+
+background:#24325f;
+
+}
+
+
+.user{
+
+background:#63f5c6;
+
+color:#111;
+
+margin-left:auto;
+
+}
+
+
+
+.tag{
+
+font-size:11px;
+
+opacity:.6;
+
+margin-bottom:5px;
+
+}
+
+
+
+.input-area{
+
+display:flex;
+
+gap:10px;
+
+}
+
+
+
+input{
+
+flex:1;
+
+padding:15px;
+
+border-radius:15px;
+
+border:none;
+
+background:#ffffff15;
+
+color:white;
+
+outline:none;
+
+}
+
+
+
+
+.send{
+
+background:#7b70ff;
+
+color:white;
+
+}
+
+
+
+
+
+/* INFO */
+
+.info{
+
+display:grid;
+
+grid-template-columns:repeat(3,1fr);
+
+gap:15px;
+
+margin-top:20px;
+
+}
+
+
+.box{
+
+background:#ffffff10;
+
+padding:15px;
+
+border-radius:15px;
+
+text-align:center;
+
+}
+
+
+.box h2{
+
+color:#63f5c6;
+
+}
+
+
+
+@media(max-width:800px){
+
+.container{
+
+grid-template-columns:1fr;
+
+}
+
+}
+
 
 </style>
+
 </head>
-<button onclick="speak('Hello Zunera. Voice is working.')">
-Test Voice
-</button>
+
 
 <body>
 
-<div class="wrapper">
 
-<div class="panel">
+<div class="container">
+
+
+<!-- LEFT -->
+
+<div class="card">
+
 
 <div class="header">
-<div class="brand">IVR Demo — Shaik Zunera</div>
-<div id="status">Backend: Checking...</div>
+
+<div class="logo">
+🤖 AI IVR Assistant
 </div>
 
-<div class="display">
 
-<div class="callbar">
-<div>+91 1800 123 456</div>
-<div class="timer" id="timer">00:00</div>
+<div class="status" id="status">
+Online
 </div>
 
-<div class="ivr-box" id="ivr">
-
-<div class="message">
-<div class="tag">System</div>
-Press Start Call to begin IVR simulation
-</div>
 
 </div>
 
-<div class="keypad">
 
-<div class="key" data-k="1">1</div>
-<div class="key" data-k="2">2</div>
-<div class="key" data-k="3">3</div>
-<div class="key" data-k="4">4</div>
-<div class="key" data-k="5">5</div>
-<div class="key" data-k="6">6</div>
-<div class="key" data-k="7">7</div>
-<div class="key" data-k="8">8</div>
-<div class="key" data-k="9">9</div>
-<div class="key" data-k="*">*</div>
-<div class="key" data-k="0">0</div>
-<div class="key" data-k="#">#</div>
+
+<div class="ai-circle">
+🎙️
+</div>
+
+
+
+<div class="timer" id="timer">
+00:00
+</div>
+
+
+
+<div class="call-actions">
+
+
+<button class="start" id="startBtn">
+Start Call
+</button>
+
+
+<button class="end" id="endBtn">
+Hang Up
+</button>
+
 
 </div>
 
-<div class="controls">
-<button class="start" id="startBtn">Start Call</button>
-<button class="end" id="endBtn">Hang Up</button>
-<button class="start" id="voiceBtn">🎤 Speak</button>
-</div>
+
+<button class="voice" id="voiceBtn">
+
+🎤 Speak
+
+</button>
+
+
+
+<div class="info">
+
+
+<div class="box">
+
+<h2 id="active">
+0
+</h2>
+
+Active
 
 </div>
+
+
+<div class="box">
+
+<h2 id="total">
+0
+</h2>
+
+Calls
+
 </div>
 
-<div class="right">
+
+<div class="box">
+
+<h2>
+AI
+</h2>
+
+NLP
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+<!-- RIGHT -->
+
 
 <div class="card">
-<b>Session Info</b>
-<div id="active">Active Calls: 0</div>
-<div id="total">Total Calls: 0</div>
+
+
+<h2>
+💬 Conversation
+</h2>
+
+
+<div class="chat" id="chat">
+
+
+<div class="message ivr">
+
+<div class="tag">
+IVR
 </div>
 
-<div class="card">
-<b>Call Logs</b>
-
-<div class="log" id="logs">
-<div class="log-item">No calls yet</div>
-</div>
+Welcome! Press Start Call to begin.
 
 </div>
 
-</div>
 
 </div>
+
+
+
+
+<div class="input-area">
+
+<input id="textInput"
+placeholder="Type your request...">
+
+
+<button class="send" onclick="sendText()">
+
+Send
+
+</button>
+
+
+</div>
+
+
+
+</div>
+
+
+</div>
+
+
+
+
 
 <script>
 
-const API="https://ai-enabled-conversational-ivr-896z.onrender.com/"
 
-/* VOICE LOADER */
+const API=
+"https://ai-enabled-conversational-ivr-896z.onrender.com";
 
-let voices=[]
 
-speechSynthesis.onvoiceschanged=function(){
-voices=speechSynthesis.getVoices()
+let callSession=null;
+
+let startTime;
+
+let timer;
+
+
+
+const chat=document.getElementById("chat");
+
+
+
+function addMessage(text,type="ivr"){
+
+
+let div=document.createElement("div");
+
+
+div.className="message "+type;
+
+
+div.innerHTML=
+
+`
+<div class="tag">
+${type==="ivr"?"IVR":"You"}
+</div>
+
+${text}
+
+`;
+
+
+chat.appendChild(div);
+
+
+chat.scrollTop=chat.scrollHeight;
+
+
+if(type==="ivr")
+speak(text);
+
 }
 
-let callSession=null
-let timerInt
-let startTime
 
-const ivr=document.getElementById("ivr")
-const logs=document.getElementById("logs")
-const timer=document.getElementById("timer")
+
+
 
 function speak(text){
 
-if(!('speechSynthesis' in window)){
-console.log("Speech not supported")
-return
-}
+let u=new SpeechSynthesisUtterance(text);
 
-let msg = new SpeechSynthesisUtterance(text)
+u.lang="en-US";
 
-msg.lang = "en-US"
-msg.rate = 1
-msg.pitch = 1
-msg.volume = 1
-
-let voices = speechSynthesis.getVoices()
-
-if(voices.length > 0){
-msg.voice = voices[0]
-}
-
-speechSynthesis.cancel()
-
-setTimeout(function(){
-speechSynthesis.speak(msg)
-},300)
-
-}
-function addMsg(text,tag="System"){
-
-let div=document.createElement("div")
-div.className="message"
-div.innerHTML="<div class='tag'>"+tag+"</div>"+text
-
-ivr.appendChild(div)
-ivr.scrollTop=ivr.scrollHeight
-
-if(tag==="IVR"){
-speak(text)
-}
+speechSynthesis.speak(u);
 
 }
 
-function log(text){
-let item=document.createElement("div")
-item.className="log-item"
-item.innerText=new Date().toLocaleTimeString()+" - "+text
-logs.prepend(item)
-}
+
+
+
+
+document.getElementById("startBtn")
+.onclick=async()=>{
+
+
+let res=await fetch(API+"/ivr/start",{
+
+method:"POST",
+
+headers:{
+"Content-Type":"application/json"
+},
+
+body:JSON.stringify({
+
+caller_number:"+911111111111"
+
+})
+
+});
+
+
+let data=await res.json();
+
+
+callSession=data.call_id;
+
+
+addMessage(data.prompt);
+
+
+startTimer();
+
+
+};
+
+
+
+
+
+
+document.getElementById("endBtn")
+.onclick=async()=>{
+
+
+if(!callSession)return;
+
+
+await fetch(API+
+"/ivr/end?call_id="+callSession,
+
+{
+method:"POST"
+});
+
+
+addMessage(
+"Call disconnected"
+);
+
+
+callSession=null;
+
+
+};
+
+
+
+
+
+
 
 function startTimer(){
 
-startTime=Date.now()
 
-timerInt=setInterval(()=>{
+startTime=Date.now();
 
-let s=Math.floor((Date.now()-startTime)/1000)
 
-timer.innerText=
-String(Math.floor(s/60)).padStart(2,"0")+":"+
-String(s%60).padStart(2,"0")
+timer=setInterval(()=>{
 
-},1000)
 
-}
+let s=Math.floor(
+(Date.now()-startTime)/1000
+);
 
-function stopTimer(){
-clearInterval(timerInt)
-timer.innerText="00:00"
-}
 
-document.getElementById("startBtn").onclick=async()=>{
+document.getElementById("timer")
+.innerHTML=
 
-addMsg("Connecting...")
+Math.floor(s/60)
+.toString()
+.padStart(2,"0")
 
-let r=await fetch(API+"/ivr/start",{
-method:"POST",
-headers:{'Content-Type':'application/json'},
-body:JSON.stringify({caller_number:"+911111111111"})
-})
++
+":"
 
-let data=await r.json()
++
 
-callSession=data.call_id
+(s%60)
+.toString()
+.padStart(2,"0");
 
-addMsg(data.prompt,"IVR")
 
-log("Call started ID:"+callSession)
+},1000);
 
-startTimer()
 
 }
 
-document.getElementById("endBtn").onclick=async()=>{
 
-if(!callSession)return
 
-await fetch(API+"/ivr/end?call_id="+callSession,{method:"POST"})
 
-log("Call ended "+callSession)
 
-callSession=null
 
-stopTimer()
 
-addMsg("Call ended","IVR")
 
-}
+async function sendText(){
 
-document.querySelectorAll(".key").forEach(k=>{
 
-k.onclick=async()=>{
+let text=
+document.getElementById("textInput").value;
 
-let digit=k.dataset.k
 
-addMsg("Pressed "+digit,"User")
+if(!text)return;
 
-if(!callSession)return
 
-let r=await fetch(API+"/ivr/dtmf",{
+addMessage(text,"user");
+
+
+let res=
+await fetch(API+"/ivr/voice",{
 
 method:"POST",
-headers:{'Content-Type':'application/json'},
+
+headers:{
+"Content-Type":"application/json"
+},
+
+
 body:JSON.stringify({
 
 call_id:callSession,
-digit:digit,
-current_menu:"main"
+
+text:text
 
 })
 
+
+});
+
+
+let data=await res.json();
+
+
+addMessage(data.prompt);
+
+
+}
+
+
+
+
+
+
+
+
+// VOICE
+
+
+let recognition;
+
+
+if("webkitSpeechRecognition" in window){
+
+
+recognition=
+new webkitSpeechRecognition();
+
+
+recognition.lang="en-IN";
+
+
+recognition.onresult=e=>{
+
+
+let text=
+e.results[0][0].transcript;
+
+
+addMessage(text,"user");
+
+
+sendVoice(text);
+
+
+};
+
+
+}
+
+
+
+document.getElementById("voiceBtn")
+.onclick=()=>{
+
+
+recognition.start();
+
+
+};
+
+
+
+
+
+async function sendVoice(text){
+
+
+let res=
+await fetch(API+"/ivr/voice",{
+
+method:"POST",
+
+headers:{
+"Content-Type":"application/json"
+},
+
+body:JSON.stringify({
+
+call_id:callSession,
+
+text:text
+
 })
 
-let data=await r.json()
+});
 
-if(data.prompt) addMsg(data.prompt,"IVR")
 
-}
+let data=await res.json();
 
-})
 
-/* VOICE INPUT */
+addMessage(data.prompt);
 
-let recognition
-
-if('webkitSpeechRecognition' in window){
-
-recognition=new webkitSpeechRecognition()
-
-recognition.lang="en-IN"
-
-recognition.onstart=()=>{
-addMsg("Listening...","System")
-}
-
-recognition.onresult=(event)=>{
-
-let speech=event.results[0][0].transcript.toLowerCase()
-
-addMsg("You said: "+speech,"User")
-
-const map={
-one:"1",
-two:"2",
-three:"3",
-four:"4",
-five:"5",
-six:"6",
-seven:"7",
-eight:"8",
-nine:"9",
-zero:"0"
-}
-
-let digit=map[speech]||speech.match(/[0-9]/)?.[0]
-
-if(digit){
-document.querySelector(`[data-k="${digit}"]`).click()
-}else{
-addMsg("Could not detect number","System")
-}
 
 }
 
-}
 
-document.getElementById("voiceBtn").onclick=()=>{
-
-if(!recognition){
-alert("Speech recognition not supported")
-return
-}
-
-recognition.start()
-
-}
 
 </script>
 
+
+
 </body>
+
 </html>
