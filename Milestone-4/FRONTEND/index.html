@@ -4,7 +4,7 @@
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>AI Conversational IVR</title>
 
@@ -12,197 +12,343 @@
 <style>
 
 *{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:"Segoe UI",sans-serif;
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:"Segoe UI",sans-serif;
 }
 
 
 body{
 
-    min-height:100vh;
-
-    background:
-    radial-gradient(circle at top,#263b7a,#080d20 45%);
-
-    color:white;
-
-    display:flex;
-    justify-content:center;
-    align-items:center;
-
-}
-
-
-.container{
-
-    width:1100px;
-    max-width:95%;
-
-    display:grid;
-
-    grid-template-columns:420px 1fr;
-
-    gap:25px;
-
-}
-
-
-/* LEFT PANEL */
-
-.card{
-
-    background:rgba(255,255,255,.08);
-
-    backdrop-filter:blur(20px);
-
-    border:1px solid rgba(255,255,255,.15);
-
-    border-radius:25px;
-
-    padding:25px;
-
-    box-shadow:0 20px 50px rgba(0,0,0,.4);
-
-}
-
-
-
-.header{
-
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-
-}
-
-
-.logo{
-
-    font-size:22px;
-
-    font-weight:800;
-
-    color:#63f5c6;
-
-}
-
-
-.status{
-
-    padding:7px 15px;
-
-    border-radius:20px;
-
-    background:#1bc47d;
-
-    font-size:12px;
-
-}
-
-
-
-.ai-circle{
-
-    width:120px;
-    height:120px;
-
-    margin:30px auto;
-
-    border-radius:50%;
-
-    background:
-    linear-gradient(135deg,#63f5c6,#7b70ff);
-
-    display:flex;
-
-    justify-content:center;
-    align-items:center;
-
-    font-size:45px;
-
-
-    animation:pulse 2s infinite;
-
-}
-
-
-@keyframes pulse{
-
-50%{
-    transform:scale(1.08);
-
-    box-shadow:0 0 50px #63f5c6;
-}
-
-}
-
-
-
-.timer{
-
-    text-align:center;
-
-    font-size:30px;
-
-    color:#63f5c6;
-
-}
-
-
-
-.call-actions{
-
-    display:flex;
-
-    gap:10px;
-
-    margin-top:25px;
-
-}
-
-
-button{
-
-    flex:1;
-
-    padding:14px;
-
-    border:none;
-
-    border-radius:15px;
-
-    cursor:pointer;
-
-    font-weight:bold;
-
-    font-size:15px;
-
-}
-
-
-
-.start{
+min-height:100vh;
 
 background:
-linear-gradient(90deg,#63f5c6,#7b70ff);
+linear-gradient(-45deg,#050816,#101b3d,#07172e,#24104f);
 
-color:#111;
+background-size:400% 400%;
 
-}
+animation:bg 12s infinite;
 
-
-.end{
-
-background:#ff4b5c;
+display:flex;
+justify-content:center;
+align-items:center;
 
 color:white;
 
 }
 
 
+@keyframes bg{
+
+0%{
+background-position:0% 50%;
+}
+
+50%{
+background-position:100% 50%;
+}
+
+100%{
+background-position:0% 50%;
+}
+
+}
+
+
+
+.container{
+
+width:1200px;
+
+max-width:95%;
+
+display:grid;
+
+grid-template-columns:380px 1fr;
+
+gap:30px;
+
+}
+
+
+
+
+.card{
+
+
+background:
+
+rgba(255,255,255,0.08);
+
+
+border:
+
+1px solid rgba(255,255,255,.2);
+
+
+backdrop-filter:blur(25px);
+
+
+border-radius:30px;
+
+
+padding:30px;
+
+
+box-shadow:
+
+0 30px 80px rgba(0,0,0,.5);
+
+}
+
+
+
+
+.header{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+}
+
+
+
+.logo{
+
+font-size:25px;
+
+font-weight:900;
+
+
+background:
+
+linear-gradient(90deg,#00ffd5,#8b7bff);
+
+
+-webkit-background-clip:text;
+
+color:transparent;
+
+}
+
+
+
+.status{
+
+background:#00e676;
+
+color:#001;
+
+padding:8px 18px;
+
+border-radius:30px;
+
+font-size:12px;
+
+font-weight:bold;
+
+box-shadow:0 0 20px #00e676;
+
+}
+
+
+
+
+.ai-circle{
+
+position:relative;
+
+width:150px;
+
+height:150px;
+
+margin:45px auto;
+
+
+border-radius:50%;
+
+
+background:
+
+linear-gradient(135deg,#00ffd5,#765cff);
+
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+
+font-size:60px;
+
+
+box-shadow:
+
+0 0 60px #00ffd5;
+
+
+animation:float 3s infinite;
+
+}
+
+
+
+.ai-circle::before,
+.ai-circle::after{
+
+
+content:"";
+
+position:absolute;
+
+width:180px;
+
+height:180px;
+
+
+border-radius:50%;
+
+
+border:2px solid #00ffd5;
+
+
+animation:ring 2s infinite;
+
+}
+
+
+
+.ai-circle::after{
+
+animation-delay:1s;
+
+}
+
+
+
+@keyframes ring{
+
+
+100%{
+
+transform:scale(1.7);
+
+opacity:0;
+
+}
+
+}
+
+
+
+
+@keyframes float{
+
+50%{
+
+transform:translateY(-15px);
+
+}
+
+}
+
+
+
+
+.timer{
+
+text-align:center;
+
+font-size:40px;
+
+font-weight:bold;
+
+color:#00ffd5;
+
+text-shadow:0 0 20px #00ffd5;
+
+}
+
+
+
+
+.call-actions{
+
+display:flex;
+
+gap:15px;
+
+margin-top:30px;
+
+}
+
+
+
+button{
+
+flex:1;
+
+padding:15px;
+
+border:none;
+
+border-radius:18px;
+
+font-size:15px;
+
+font-weight:bold;
+
+cursor:pointer;
+
+transition:.3s;
+
+}
+
+
+
+button:hover{
+
+transform:translateY(-5px);
+
+box-shadow:0 15px 30px rgba(0,0,0,.4);
+
+}
+
+
+
+
+.start{
+
+background:
+
+linear-gradient(90deg,#00ffd5,#7b70ff);
+
+}
+
+
+
+.end{
+
+background:
+
+linear-gradient(90deg,#ff416c,#ff4b2b);
+
+color:white;
+
+}
+
+
+
 .voice{
+
+margin-top:15px;
+
+width:100%;
 
 background:#ffffff20;
 
@@ -212,6 +358,45 @@ border:1px solid white;
 
 }
 
+
+
+
+
+.info{
+
+display:grid;
+
+grid-template-columns:repeat(3,1fr);
+
+gap:12px;
+
+margin-top:30px;
+
+}
+
+
+
+.box{
+
+background:#ffffff12;
+
+padding:18px;
+
+border-radius:20px;
+
+text-align:center;
+
+}
+
+
+
+.box h2{
+
+color:#00ffd5;
+
+font-size:28px;
+
+}
 
 
 
@@ -231,27 +416,29 @@ padding:15px;
 
 
 
+
 .message{
 
 max-width:75%;
 
-padding:15px;
+padding:18px;
 
-border-radius:20px;
+border-radius:25px;
 
-margin:12px 0;
+margin:15px 0;
 
-animation:show .3s;
+animation:slide .4s;
 
 }
 
 
 
-@keyframes show{
+@keyframes slide{
 
 from{
 
 opacity:0;
+
 transform:translateY(20px);
 
 }
@@ -262,20 +449,26 @@ transform:translateY(20px);
 
 .ivr{
 
-background:#24325f;
+background:
+
+linear-gradient(135deg,#202b55,#334b9b);
 
 }
+
 
 
 .user{
 
-background:#63f5c6;
-
-color:#111;
-
 margin-left:auto;
 
+background:
+
+linear-gradient(135deg,#00ffd5,#00bfa6);
+
+color:#001;
+
 }
+
 
 
 
@@ -283,9 +476,9 @@ margin-left:auto;
 
 font-size:11px;
 
-opacity:.6;
+opacity:.7;
 
-margin-bottom:5px;
+margin-bottom:8px;
 
 }
 
@@ -295,7 +488,7 @@ margin-bottom:5px;
 
 display:flex;
 
-gap:10px;
+gap:15px;
 
 }
 
@@ -305,17 +498,19 @@ input{
 
 flex:1;
 
-padding:15px;
+padding:18px;
 
-border-radius:15px;
+border-radius:20px;
 
 border:none;
+
+outline:none;
 
 background:#ffffff15;
 
 color:white;
 
-outline:none;
+font-size:16px;
 
 }
 
@@ -324,49 +519,14 @@ outline:none;
 
 .send{
 
-background:#7b70ff;
+background:
+
+linear-gradient(90deg,#7b70ff,#00ffd5);
 
 color:white;
 
 }
 
-
-
-
-
-/* INFO */
-
-.info{
-
-display:grid;
-
-grid-template-columns:repeat(3,1fr);
-
-gap:15px;
-
-margin-top:20px;
-
-}
-
-
-.box{
-
-background:#ffffff10;
-
-padding:15px;
-
-border-radius:15px;
-
-text-align:center;
-
-}
-
-
-.box h2{
-
-color:#63f5c6;
-
-}
 
 
 
@@ -381,9 +541,11 @@ grid-template-columns:1fr;
 }
 
 
+
 </style>
 
 </head>
+
 
 
 <body>
@@ -392,7 +554,7 @@ grid-template-columns:1fr;
 <div class="container">
 
 
-<!-- LEFT -->
+<!-- LEFT PANEL -->
 
 <div class="card">
 
@@ -400,28 +562,38 @@ grid-template-columns:1fr;
 <div class="header">
 
 <div class="logo">
-🤖 AI IVR Assistant
+
+🤖 AI IVR
+
+</div>
+
+
+<div class="status">
+
+ONLINE
+
 </div>
 
 
-<div class="status" id="status">
-Online
 </div>
 
-
-</div>
 
 
 
 <div class="ai-circle">
+
 🎙️
+
 </div>
 
 
 
 <div class="timer" id="timer">
+
 00:00
+
 </div>
+
 
 
 
@@ -429,16 +601,23 @@ Online
 
 
 <button class="start" id="startBtn">
+
 Start Call
+
 </button>
 
 
+
 <button class="end" id="endBtn">
+
 Hang Up
+
 </button>
 
 
 </div>
+
+
 
 
 <button class="voice" id="voiceBtn">
@@ -449,13 +628,17 @@ Hang Up
 
 
 
+
+
 <div class="info">
 
 
 <div class="box">
 
 <h2 id="active">
+
 0
+
 </h2>
 
 Active
@@ -466,7 +649,9 @@ Active
 <div class="box">
 
 <h2 id="total">
+
 0
+
 </h2>
 
 Calls
@@ -477,7 +662,9 @@ Calls
 <div class="box">
 
 <h2>
+
 AI
+
 </h2>
 
 NLP
@@ -488,21 +675,26 @@ NLP
 </div>
 
 
+
 </div>
 
 
 
 
 
-<!-- RIGHT -->
+
+<!-- CHAT PANEL -->
 
 
 <div class="card">
 
 
 <h2>
-💬 Conversation
+
+💬 AI Conversation
+
 </h2>
+
 
 
 <div class="chat" id="chat">
@@ -510,13 +702,19 @@ NLP
 
 <div class="message ivr">
 
+
 <div class="tag">
-IVR
-</div>
 
-Welcome! Press Start Call to begin.
+AI IVR
 
 </div>
+
+
+Welcome! Click Start Call to begin.
+
+
+</div>
+
 
 
 </div>
@@ -526,8 +724,11 @@ Welcome! Press Start Call to begin.
 
 <div class="input-area">
 
+
 <input id="textInput"
-placeholder="Type your request...">
+
+placeholder="Ask something...">
+
 
 
 <button class="send" onclick="sendText()">
@@ -550,11 +751,14 @@ Send
 
 
 
+
+
 <script>
 
 
-const API=
+const API =
 "https://ai-enabled-conversational-ivr-ste4.onrender.com";
+
 
 
 let callSession=null;
@@ -569,6 +773,8 @@ const chat=document.getElementById("chat");
 
 
 
+
+
 function addMessage(text,type="ivr"){
 
 
@@ -578,16 +784,22 @@ let div=document.createElement("div");
 div.className="message "+type;
 
 
+
 div.innerHTML=
 
 `
+
 <div class="tag">
-${type==="ivr"?"IVR":"You"}
+
+${type==="ivr"?"AI":"You"}
+
 </div>
+
 
 ${text}
 
 `;
+
 
 
 chat.appendChild(div);
@@ -596,8 +808,11 @@ chat.appendChild(div);
 chat.scrollTop=chat.scrollHeight;
 
 
+
 if(type==="ivr")
+
 speak(text);
+
 
 }
 
@@ -607,14 +822,61 @@ speak(text);
 
 function speak(text){
 
-let u=new SpeechSynthesisUtterance(text);
+let speech=new SpeechSynthesisUtterance(text);
 
-u.lang="en-US";
+speech.lang="en-US";
 
-speechSynthesis.speak(u);
+speechSynthesis.speak(speech);
 
 }
 
+
+
+
+
+function typing(){
+
+
+let div=document.createElement("div");
+
+
+div.className="message ivr";
+
+div.id="typing";
+
+
+div.innerHTML=
+
+`
+
+<div class="tag">
+
+AI
+
+</div>
+
+
+Thinking...
+
+`;
+
+chat.appendChild(div);
+
+
+}
+
+
+
+
+function removeTyping(){
+
+let t=document.getElementById("typing");
+
+if(t)
+
+t.remove();
+
+}
 
 
 
@@ -628,7 +890,9 @@ let res=await fetch(API+"/ivr/start",{
 method:"POST",
 
 headers:{
+
 "Content-Type":"application/json"
+
 },
 
 body:JSON.stringify({
@@ -663,20 +927,27 @@ document.getElementById("endBtn")
 .onclick=async()=>{
 
 
-if(!callSession)return;
+if(!callSession)
+
+return;
 
 
-await fetch(API+
-"/ivr/end?call_id="+callSession,
+
+await fetch(
+
+API+"/ivr/end?call_id="+callSession,
 
 {
+
 method:"POST"
-});
 
+}
 
-addMessage(
-"Call disconnected"
 );
+
+
+
+addMessage("Call disconnected");
 
 
 callSession=null;
@@ -689,39 +960,41 @@ callSession=null;
 
 
 
-
 function startTimer(){
 
 
 startTime=Date.now();
 
 
+
 timer=setInterval(()=>{
 
 
 let s=Math.floor(
+
 (Date.now()-startTime)/1000
+
 );
 
 
-document.getElementById("timer")
-.innerHTML=
 
-Math.floor(s/60)
-.toString()
-.padStart(2,"0")
+document.getElementById("timer").innerHTML=
+
+
+String(Math.floor(s/60)).padStart(2,"0")
 
 +
+
 ":"
 
 +
 
-(s%60)
-.toString()
-.padStart(2,"0");
+String(s%60).padStart(2,"0");
+
 
 
 },1000);
+
 
 
 }
@@ -732,27 +1005,34 @@ Math.floor(s/60)
 
 
 
-
 async function sendText(){
 
 
-let text=
-document.getElementById("textInput").value;
+let text=document.getElementById("textInput").value;
 
 
-if(!text)return;
+if(!text)
+
+return;
+
 
 
 addMessage(text,"user");
 
 
-let res=
-await fetch(API+"/ivr/voice",{
+
+typing();
+
+
+
+let res=await fetch(API+"/ivr/voice",{
 
 method:"POST",
 
 headers:{
+
 "Content-Type":"application/json"
+
 },
 
 
@@ -768,7 +1048,12 @@ text:text
 });
 
 
+
 let data=await res.json();
+
+
+
+removeTyping();
 
 
 addMessage(data.prompt);
@@ -782,28 +1067,24 @@ addMessage(data.prompt);
 
 
 
-
-// VOICE
-
-
 let recognition;
+
 
 
 if("webkitSpeechRecognition" in window){
 
 
-recognition=
-new webkitSpeechRecognition();
+recognition=new webkitSpeechRecognition();
 
 
 recognition.lang="en-IN";
 
 
+
 recognition.onresult=e=>{
 
 
-let text=
-e.results[0][0].transcript;
+let text=e.results[0][0].transcript;
 
 
 addMessage(text,"user");
@@ -819,9 +1100,13 @@ sendVoice(text);
 
 
 
+
+
 document.getElementById("voiceBtn")
 .onclick=()=>{
 
+
+if(recognition)
 
 recognition.start();
 
@@ -832,17 +1117,27 @@ recognition.start();
 
 
 
+
+
+
 async function sendVoice(text){
 
 
-let res=
-await fetch(API+"/ivr/voice",{
+typing();
+
+
+let res=await fetch(API+"/ivr/voice",{
+
 
 method:"POST",
 
+
 headers:{
+
 "Content-Type":"application/json"
+
 },
+
 
 body:JSON.stringify({
 
@@ -852,10 +1147,15 @@ text:text
 
 })
 
+
 });
 
 
+
 let data=await res.json();
+
+
+removeTyping();
 
 
 addMessage(data.prompt);
