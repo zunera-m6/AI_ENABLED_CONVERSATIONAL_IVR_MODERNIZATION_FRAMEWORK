@@ -310,3 +310,545 @@ MENU={
 
 
 }
+
+# ================= SESSION =================
+
+
+def create_session(caller_number):
+
+    cid = f"CALL_{random.randint(100000,999999)}"
+
+
+    active_calls[cid]={
+
+        "call_id":cid,
+
+        "caller_number":caller_number,
+
+        "start_time":datetime.now().isoformat(),
+
+        "current_menu":"main",
+
+        "pnr_buffer":""
+
+    }
+
+
+    return cid
+
+
+
+
+
+# ================= ROOT =================
+
+
+@app.get("/")
+def root():
+
+    return {
+
+        "status":"AI IRCTC IVR Running",
+
+        "active_calls":len(active_calls),
+
+        "total_calls":len(call_history)
+
+    }
+
+
+
+
+
+# ================= START CALL =================
+
+
+@app.post("/ivr/start")
+def ivr_start(payload:CallStart):
+
+
+    cid=create_session(
+        payload.caller_number
+    )
+
+
+    return {
+
+        "call_id":cid,
+
+        "status":"connected",
+
+        "prompt":MENU["main"]["prompt"]
+
+    }
+
+
+
+
+
+# ================= AI INTENT RECOGNITION =================
+
+
+def detect_intent(text):
+
+
+    text=text.lower()
+
+
+
+    if any(x in text for x in [
+
+        "book",
+
+        "booking",
+
+        "reserve",
+
+        "ticket"
+
+    ]):
+
+        return "booking"
+
+
+
+    elif any(x in text for x in [
+
+        "pnr",
+
+        "ticket status",
+
+        "status of my ticket"
+
+    ]):
+
+        return "pnr_status"
+
+
+
+    elif any(x in text for x in [
+
+        "train status",
+
+        "running status",
+
+        "where is my train",
+
+        "train location"
+
+    ]):
+
+        return "train_status"
+
+
+
+    elif any(x in text for x in [
+
+        "cancel",
+
+        "cancel ticket",
+
+        "cancellation"
+
+    ]):
+
+        return "cancel_ticket"
+
+
+
+    elif any(x in text for x in [
+
+        "refund",
+
+        "refund status",
+
+        "money back"
+
+    ]):
+
+        return "refunds"
+
+
+
+    elif any(x in text for x in [
+
+        "seat",
+
+        "availability",
+
+        "available seat"
+
+    ]):
+
+        return "seat"
+
+
+
+    elif any(x in text for x in [
+
+        "customer care",
+
+        "support",
+
+        "agent"
+
+    ]):
+
+        return "support"
+
+
+
+    return "unknown"
+
+
+
+
+
+
+# ================= NATURAL VOICE API =================
+
+
+
+@app.post("/ivr/voice")
+def ivr_voice(data:VoiceInput):
+
+
+    if data.call_id not in active_calls:
+
+        raise HTTPException(
+
+            status_code=404,
+
+            detail="Call session not found"
+
+        )
+
+
+    session=active_calls[data.call_id]
+
+
+    intent=detect_intent(data.text)
+
+
+
+    if intent=="booking":
+
+
+        session["current_menu"]="booking"
+
+
+        return {
+
+            "intent":"BOOK_TICKET",
+
+            "prompt":
+
+            "Sure. Ticket booking selected. "
+
+            + MENU["booking"]["prompt"]
+
+        }
+
+
+
+
+    elif intent=="pnr_status":
+
+
+        session["current_menu"]="pnr_status"
+
+
+        return {
+
+            "intent":"CHECK_PNR",
+
+            "prompt":
+
+            "Please enter your 10 digit PNR number."
+
+        }
+
+
+
+
+    elif intent=="train_status":
+
+
+        session["current_menu"]="train_status"
+
+
+        return {
+
+            "intent":"TRAIN_STATUS",
+
+            "prompt":
+
+            MENU["train_status"]["prompt"]
+
+        }
+
+
+
+
+
+    elif intent=="cancel_ticket":
+
+
+        session["current_menu"]="cancel_ticket"
+
+
+        return {
+
+            "intent":"CANCEL_TICKET",
+
+            "prompt":
+
+            MENU["cancel_ticket"]["prompt"]
+
+        }
+
+
+
+
+    elif intent=="refunds":
+
+
+        session["current_menu"]="refunds"
+
+
+        return {
+
+            "intent":"REFUND_STATUS",
+
+            "prompt":
+
+            MENU["refunds"]["prompt"]
+
+        }
+
+
+
+
+    elif intent=="seat":
+
+
+        session["current_menu"]="seat"
+
+
+        return {
+
+            "intent":"SEAT_AVAILABILITY",
+
+            "prompt":
+
+            MENU["seat"]["prompt"]
+
+        }
+
+
+
+
+
+    elif intent=="support":
+
+
+        return {
+
+            "intent":"TRANSFER",
+
+            "prompt":
+
+            "Connecting you to IRCTC customer support."
+
+        }
+
+
+
+
+
+    else:
+
+
+        return {
+
+            "intent":"UNKNOWN",
+
+            "prompt":
+
+            "Sorry, I did not understand. "
+            "Please say booking, PNR, refund or cancellation."
+
+        }
+
+
+
+
+
+
+
+# ================= DTMF HANDLER =================
+
+
+@app.post("/ivr/dtmf")
+def ivr_dtmf(data:DTMFInput):
+
+
+    call_id=data.call_id
+
+
+    digit=data.digit
+
+
+
+    if call_id not in active_calls:
+
+
+        raise HTTPException(
+
+            status_code=404,
+
+            detail="session missing"
+
+        )
+
+
+
+    session=active_calls[call_id]
+
+
+    menu_key=session["current_menu"]
+
+
+    menu=MENU.get(menu_key)
+
+
+
+    if digit not in menu["options"]:
+
+
+        return {
+
+            "prompt":
+
+            "Invalid option. Please try again."
+
+        }
+
+
+
+
+    option=menu["options"][digit]
+
+
+    action=option["action"]
+
+
+    msg=option["msg"]
+
+
+
+
+    if action=="goto":
+
+
+        target=option["target"]
+
+
+        session["current_menu"]=target
+
+
+        return {
+
+
+            "prompt":
+
+            msg+" "+MENU[target]["prompt"]
+
+        }
+
+
+
+
+    elif action=="end":
+
+
+        session["end_time"]=datetime.now().isoformat()
+
+
+        call_history.append(session)
+
+
+        del active_calls[call_id]
+
+
+
+        return {
+
+            "prompt":msg
+
+        }
+
+
+
+
+
+    elif action=="transfer":
+
+
+        session["end_time"]=datetime.now().isoformat()
+
+
+        call_history.append(session)
+
+
+        del active_calls[call_id]
+
+
+
+        return {
+
+            "prompt":msg
+
+        }
+
+
+
+
+
+
+# ================= END CALL =================
+
+
+@app.post("/ivr/end")
+def ivr_end(call_id:str=Query(...)):
+
+
+    if call_id in active_calls:
+
+
+        session=active_calls[call_id]
+
+
+        session["end_time"]=datetime.now().isoformat()
+
+
+        call_history.append(session)
+
+
+        del active_calls[call_id]
+
+
+        return {
+
+            "status":"ended"
+
+        }
+
+
+
+    return {
+
+
+        "status":"not found"
+
+    }
