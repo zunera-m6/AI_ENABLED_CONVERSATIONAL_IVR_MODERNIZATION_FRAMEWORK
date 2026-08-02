@@ -4,8 +4,7 @@
 
 
 // Change this after deployment
-const API_URL = "http://localhost:8000";
-
+const API_URL = "https://ai-enabled-conversational-ivr-ste4.onrender.com";
 
 
 
