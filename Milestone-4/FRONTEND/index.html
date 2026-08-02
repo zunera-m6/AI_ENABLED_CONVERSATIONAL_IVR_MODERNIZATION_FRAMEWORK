@@ -12,29 +12,30 @@
 <style>
 
 *{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:"Segoe UI",sans-serif;
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:"Segoe UI",sans-serif;
 }
 
 
 body{
 
-    min-height:100vh;
+min-height:100vh;
 
-    background:
-    linear-gradient(-45deg,#050816,#101b3d,#07172e,#24104f);
+background:
+linear-gradient(-45deg,#050816,#101b3d,#07172e,#24104f);
 
-    background-size:400% 400%;
+background-size:400% 400%;
 
-    animation:bg 12s infinite;
+animation:bg 12s infinite;
 
-    display:flex;
-    justify-content:center;
-    align-items:center;
+display:flex;
+justify-content:center;
+align-items:center;
 
-    color:white;
+color:white;
+
 }
 
 
@@ -58,20 +59,23 @@ background-position:0% 50%;
 
 .container{
 
-    width:1200px;
-    max-width:95%;
+width:1200px;
 
-    display:grid;
+max-width:95%;
 
-    grid-template-columns:380px 1fr;
+display:grid;
 
-    gap:30px;
+grid-template-columns:380px 1fr;
+
+gap:30px;
 
 }
 
 
 
+
 .card{
+
 
 background:
 
@@ -97,6 +101,7 @@ box-shadow:
 0 30px 80px rgba(0,0,0,.5);
 
 }
+
 
 
 
@@ -152,6 +157,7 @@ box-shadow:0 0 20px #00e676;
 
 
 
+
 .ai-circle{
 
 position:relative;
@@ -173,9 +179,9 @@ linear-gradient(135deg,#00ffd5,#765cff);
 
 display:flex;
 
-justify-content:center;
-
 align-items:center;
+
+justify-content:center;
 
 
 font-size:60px;
@@ -191,7 +197,10 @@ animation:float 3s infinite;
 }
 
 
-.ai-circle::before{
+
+.ai-circle::before,
+.ai-circle::after{
+
 
 content:"";
 
@@ -214,7 +223,16 @@ animation:ring 2s infinite;
 
 
 
+.ai-circle::after{
+
+animation-delay:1s;
+
+}
+
+
+
 @keyframes ring{
+
 
 100%{
 
@@ -228,6 +246,7 @@ opacity:0;
 
 
 
+
 @keyframes float{
 
 50%{
@@ -237,6 +256,7 @@ transform:translateY(-15px);
 }
 
 }
+
 
 
 
@@ -253,6 +273,7 @@ color:#00ffd5;
 text-shadow:0 0 20px #00ffd5;
 
 }
+
 
 
 
@@ -294,7 +315,10 @@ button:hover{
 
 transform:translateY(-5px);
 
+box-shadow:0 15px 30px rgba(0,0,0,.4);
+
 }
+
 
 
 
@@ -330,7 +354,11 @@ background:#ffffff20;
 
 color:white;
 
+border:1px solid white;
+
 }
+
+
 
 
 
@@ -372,18 +400,20 @@ font-size:28px;
 
 
 
+
 /* CHAT */
 
 
 .chat{
 
-height:450px;
+height:520px;
 
-overflow-y:auto;
+overflow:auto;
 
-margin-top:20px;
+padding:15px;
 
 }
+
 
 
 
@@ -431,15 +461,14 @@ linear-gradient(135deg,#202b55,#334b9b);
 
 margin-left:auto;
 
-
 background:
 
 linear-gradient(135deg,#00ffd5,#00bfa6);
 
-
 color:#001;
 
 }
+
 
 
 
@@ -460,8 +489,6 @@ margin-bottom:8px;
 display:flex;
 
 gap:15px;
-
-margin-top:20px;
 
 }
 
@@ -489,13 +516,17 @@ font-size:16px;
 
 
 
+
 .send{
 
-background:#7b70ff;
+background:
+
+linear-gradient(90deg,#7b70ff,#00ffd5);
 
 color:white;
 
 }
+
 
 
 
@@ -510,9 +541,13 @@ grid-template-columns:1fr;
 }
 
 
+
 </style>
 
 </head>
+
+
+
 <body>
 
 
@@ -527,16 +562,21 @@ grid-template-columns:1fr;
 <div class="header">
 
 <div class="logo">
+
 🤖 AI IVR
+
 </div>
 
 
 <div class="status">
+
 ONLINE
+
 </div>
 
 
 </div>
+
 
 
 
@@ -553,6 +593,7 @@ ONLINE
 00:00
 
 </div>
+
 
 
 
@@ -578,11 +619,14 @@ Hang Up
 
 
 
+
 <button class="voice" id="voiceBtn">
 
 🎤 Speak
 
 </button>
+
+
 
 
 
@@ -592,7 +636,9 @@ Hang Up
 <div class="box">
 
 <h2 id="active">
+
 0
+
 </h2>
 
 Active
@@ -600,11 +646,12 @@ Active
 </div>
 
 
-
 <div class="box">
 
 <h2 id="total">
+
 0
+
 </h2>
 
 Calls
@@ -612,11 +659,12 @@ Calls
 </div>
 
 
-
 <div class="box">
 
 <h2>
+
 AI
+
 </h2>
 
 NLP
@@ -627,7 +675,9 @@ NLP
 </div>
 
 
+
 </div>
+
 
 
 
@@ -640,7 +690,9 @@ NLP
 
 
 <h2>
+
 💬 AI Conversation
+
 </h2>
 
 
@@ -652,7 +704,9 @@ NLP
 
 
 <div class="tag">
+
 AI IVR
+
 </div>
 
 
@@ -660,6 +714,7 @@ Welcome! Click Start Call to begin.
 
 
 </div>
+
 
 
 </div>
@@ -670,10 +725,9 @@ Welcome! Click Start Call to begin.
 <div class="input-area">
 
 
-<input 
-id="textInput"
-placeholder="Ask something..."
->
+<input id="textInput"
+
+placeholder="Ask something...">
 
 
 
@@ -697,19 +751,25 @@ Send
 
 
 
+
+
 <script>
 
 
-const API = 
+const API =
 "https://ai-enabled-conversational-ivr-ste4.onrender.com";
 
 
 
-let callSession = null;
+let callSession=null;
 
-let timerInterval = null;
+let startTime;
 
-let startTime = null;
+let timer;
+
+
+
+const chat=document.getElementById("chat");
 
 
 
@@ -724,7 +784,10 @@ let div=document.createElement("div");
 div.className="message "+type;
 
 
-div.innerHTML=`
+
+div.innerHTML=
+
+`
 
 <div class="tag">
 
@@ -732,20 +795,17 @@ ${type==="ivr"?"AI":"You"}
 
 </div>
 
+
 ${text}
 
 `;
 
 
 
-document.getElementById("chat")
-.appendChild(div);
+chat.appendChild(div);
 
 
-
-document.getElementById("chat")
-.scrollTop =
-document.getElementById("chat").scrollHeight;
+chat.scrollTop=chat.scrollHeight;
 
 
 
@@ -762,16 +822,11 @@ speak(text);
 
 function speak(text){
 
-
-let speech =
-new SpeechSynthesisUtterance(text);
-
+let speech=new SpeechSynthesisUtterance(text);
 
 speech.lang="en-US";
 
-
 speechSynthesis.speak(speech);
-
 
 }
 
@@ -779,21 +834,58 @@ speechSynthesis.speak(speech);
 
 
 
-
-// START CALL
-
-
-document
-.getElementById("startBtn")
-.onclick = async()=>{
+function typing(){
 
 
-try{
+let div=document.createElement("div");
 
 
-let res = await fetch(
-API+"/ivr/start",
-{
+div.className="message ivr";
+
+div.id="typing";
+
+
+div.innerHTML=
+
+`
+
+<div class="tag">
+
+AI
+
+</div>
+
+
+Thinking...
+
+`;
+
+chat.appendChild(div);
+
+
+}
+
+
+
+
+function removeTyping(){
+
+let t=document.getElementById("typing");
+
+if(t)
+
+t.remove();
+
+}
+
+
+
+
+document.getElementById("startBtn")
+.onclick=async()=>{
+
+
+let res=await fetch(API+"/ivr/start",{
 
 method:"POST",
 
@@ -805,54 +897,23 @@ headers:{
 
 body:JSON.stringify({
 
-user:"web"
+caller_number:"+911111111111"
 
 })
 
 });
 
 
-let data = await res.json();
+let data=await res.json();
 
 
-
-callSession = data.call_id;
-
+callSession=data.call_id;
 
 
-document.getElementById("active")
-.innerHTML="1";
-
-
-document.getElementById("total")
-.innerHTML++;
-
-
-
-addMessage(
-"Call started. How can I help you?"
-);
-
+addMessage(data.prompt);
 
 
 startTimer();
-
-
-
-}
-
-catch(error){
-
-
-addMessage(
-"Server connection failed"
-);
-
-
-console.log(error);
-
-
-}
 
 
 };
@@ -862,38 +923,19 @@ console.log(error);
 
 
 
-
-// HANGUP FIXED
-
-
-document
-.getElementById("endBtn")
-.onclick = async()=>{
+document.getElementById("endBtn")
+.onclick=async()=>{
 
 
-if(!callSession){
-
-
-addMessage(
-"No active call"
-);
-
+if(!callSession)
 
 return;
 
-}
-
-
-
-try{
 
 
 await fetch(
 
-API+
-"/ivr/end?call_id="
-+
-callSession,
+API+"/ivr/end?call_id="+callSession,
 
 {
 
@@ -905,37 +947,13 @@ method:"POST"
 
 
 
-addMessage(
-"Call disconnected"
-);
-
-
-
-}
-
-catch(error){
-
-
-console.log(error);
-
-
-}
-
+addMessage("Call disconnected");
 
 
 callSession=null;
 
 
-document.getElementById("active")
-.innerHTML="0";
-
-
-
-stopTimer();
-
-
 };
-
 
 
 
@@ -948,56 +966,36 @@ function startTimer(){
 startTime=Date.now();
 
 
-timerInterval=setInterval(()=>{
+
+timer=setInterval(()=>{
 
 
-let seconds =
-Math.floor(
+let s=Math.floor(
+
 (Date.now()-startTime)/1000
+
 );
 
 
 
-let min =
-String(
-Math.floor(seconds/60)
-)
-.padStart(2,"0");
+document.getElementById("timer").innerHTML=
 
 
+String(Math.floor(s/60)).padStart(2,"0")
 
-let sec =
-String(
-seconds%60
-)
-.padStart(2,"0");
++
 
+":"
 
++
 
-document.getElementById("timer")
-.innerHTML =
-min+":"+sec;
+String(s%60).padStart(2,"0");
 
 
 
 },1000);
 
 
-}
-
-
-
-
-
-function stopTimer(){
-
-
-clearInterval(timerInterval);
-
-
-document.getElementById("timer")
-.innerHTML="00:00";
-
 
 }
 
@@ -1005,26 +1003,16 @@ document.getElementById("timer")
 
 
 
-
-
-
-
-// TEXT CHAT
 
 
 async function sendText(){
 
 
-let input =
-document.getElementById("textInput");
-
-
-
-let text=input.value.trim();
-
+let text=document.getElementById("textInput").value;
 
 
 if(!text)
+
 return;
 
 
@@ -1033,19 +1021,11 @@ addMessage(text,"user");
 
 
 
-input.value="";
+typing();
 
 
 
-try{
-
-
-let res =
-await fetch(
-
-API+"/ivr/voice",
-
-{
+let res=await fetch(API+"/ivr/voice",{
 
 method:"POST",
 
@@ -1055,11 +1035,12 @@ headers:{
 
 },
 
+
 body:JSON.stringify({
 
 call_id:callSession,
 
-speech:text
+text:text
 
 })
 
@@ -1068,31 +1049,14 @@ speech:text
 
 
 
-let data =
-await res.json();
+let data=await res.json();
 
 
 
-addMessage(
-data.prompt || "No response"
-);
+removeTyping();
 
 
-
-}
-
-catch(error){
-
-
-addMessage(
-"Backend error"
-);
-
-
-console.log(error);
-
-
-}
+addMessage(data.prompt);
 
 
 }
@@ -1101,44 +1065,32 @@ console.log(error);
 
 
 
-
-
-
-// VOICE RECOGNITION
 
 
 let recognition;
 
 
 
-if(
-"webkitSpeechRecognition" in window
-){
+if("webkitSpeechRecognition" in window){
 
 
-recognition =
-new webkitSpeechRecognition();
-
+recognition=new webkitSpeechRecognition();
 
 
 recognition.lang="en-IN";
 
 
 
-recognition.onresult=function(e){
+recognition.onresult=e=>{
 
 
-let text =
-e.results[0][0].transcript;
-
+let text=e.results[0][0].transcript;
 
 
 addMessage(text,"user");
 
 
-
 sendVoice(text);
-
 
 
 };
@@ -1150,10 +1102,7 @@ sendVoice(text);
 
 
 
-
-
-document
-.getElementById("voiceBtn")
+document.getElementById("voiceBtn")
 .onclick=()=>{
 
 
@@ -1162,15 +1111,7 @@ if(recognition)
 recognition.start();
 
 
-else
-
-alert(
-"Voice recognition not supported"
-);
-
-
 };
-
 
 
 
@@ -1182,17 +1123,14 @@ alert(
 async function sendVoice(text){
 
 
-try{
+typing();
 
 
-let res =
-await fetch(
+let res=await fetch(API+"/ivr/voice",{
 
-API+"/ivr/voice",
-
-{
 
 method:"POST",
+
 
 headers:{
 
@@ -1200,35 +1138,27 @@ headers:{
 
 },
 
+
 body:JSON.stringify({
 
 call_id:callSession,
 
-speech:text
+text:text
 
 })
+
 
 });
 
 
-let data =
-await res.json();
+
+let data=await res.json();
 
 
-
-addMessage(
-data.prompt
-);
+removeTyping();
 
 
-}
-
-
-catch(error){
-
-console.log(error);
-
-}
+addMessage(data.prompt);
 
 
 }
@@ -1238,7 +1168,7 @@ console.log(error);
 </script>
 
 
-</body>
 
+</body>
 
 </html>
